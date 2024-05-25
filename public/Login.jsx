@@ -28,6 +28,7 @@ export default function Login({ onLogin }) {
                     id="username" 
                     placeholder='Enter username'
                     value={username}
+                    required
                     onChange={(e) => setUsername(e.target.value)}
                     name="username" />
                     <br />
@@ -47,6 +48,7 @@ export default function Login({ onLogin }) {
                     className="form-input" 
                     type="password" 
                     id="password" 
+                    required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter password"
