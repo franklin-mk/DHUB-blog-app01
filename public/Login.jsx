@@ -60,7 +60,7 @@ export default function Login({ onLogin, toggleSwitch }) {
                 </button>
                 <br />
 
-                <p className="forgot">Forgot Password? <a href="#">Click here</a></p>
+                <p className="forgot">Forgot Password? <a href="https://m.media-amazon.com/images/I/31O4v0lLcHL._SY466_.jpg">Click here</a></p>
             </form>
         </div>
     );
