@@ -13,7 +13,6 @@ export default function Main({ searchQuery }) {
     const [showCommentsIndex, setShowCommentsIndex] = useState(null);
 
     useEffect(() => {
-        // Load blogs from localStorage on component mount
         const storedBlogs = JSON.parse(localStorage.getItem("blogArray")) || [];
         setBlogArray(storedBlogs);
     }, []);
@@ -41,8 +40,8 @@ export default function Main({ searchQuery }) {
         localStorage.setItem("blogArray", JSON.stringify(newBlogArray));
         writeInput.value = "";
         document.getElementById("blogTitle").value = "";
-        setSelectedImage(null); // Reset the selected image
-        setImagePreview(null); // Reset the image preview
+        setSelectedImage(null);
+        setImagePreview(null); 
     }
 
     function addLike(index) {
@@ -235,12 +234,14 @@ export default function Main({ searchQuery }) {
             </div>
             <div className="blog-content">
                 <h3 id="blog-header">New Blog Posts</h3>
-                {/* Other users blog should be displayed here */}
-                <section id="showItems">
-                    <div className="blog-container">
-                        {updateBlog()}
-                    </div>
-                </section>
+                {/* Other users blog should be displayed here 
+                    <section id="showItems">
+                        <div className="blog-container">
+                            {updateBlog()}
+                        </div>
+                    </section>
+                */}
+                
             </div>
             <div>
                 <img 

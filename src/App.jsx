@@ -7,20 +7,16 @@ import Login from '../public/Login';
 import Main from '../public/Main';
 
 export default function App() {
-  const [isNewUser, setIsNewUser] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSignup = () => {
-    // Logic for signing up the user
-    // For simplicity, we'll assume signup is always successful
     setIsNewUser(false);
     setIsAuthenticated(true);
   };
 
   const handleLogin = () => {
-    // Logic for logging in the user
-    // For simplicity, we'll assume login is always successful
     setIsAuthenticated(true);
   };
 
@@ -28,13 +24,23 @@ export default function App() {
     setSearchQuery(query);
   }
 
+  function switchLoginSignup() {
+    setIsNewUser(!isNewUser);
+  }
+
   return (
     <div>
       {!isAuthenticated ? (
         isNewUser ? (
-          <Signup onSignup={handleSignup} />
+          <Signup 
+            toggleSwitch={switchLoginSignup}
+            onSignup={handleSignup}
+             />
         ) : (
-          <Login onLogin={handleLogin} />
+          <Login 
+            toggleSwitch={switchLoginSignup}
+            onLogin={handleLogin}
+             />
         )
       ) : (
         <>

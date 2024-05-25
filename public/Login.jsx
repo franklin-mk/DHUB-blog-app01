@@ -1,67 +1,67 @@
 import React, { useState } from 'react';
 
-export default function Login({ onLogin }) {
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const [email, setEmail] = useState('');
-    
+export default function Login({ onLogin, toggleSwitch }) {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Perform login logic here
-        // For simplicity, call the onLogin function to simulate successful login
-        onLogin();
-      };
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        if (storedUser && storedUser.username === username && storedUser.password === password) {
+            onLogin();
+        } else {
+            setError("Invalid username or password");
+        }
+    };
 
     return (
-            <div className="form-container">
-                <div className="form-title">
-                    <h2>DirectEd <br />Dev-HUB</h2>
-                    <p className="motto">Connect,share and learn!</p>
-                    <p>Login to continue/ <a href="../public/Signup">Signup</a></p>
-                </div>
-                
-                <form onSubmit={handleSubmit} className="form" action="">
-                    <label htmlFor="username">Username:</label>
-                    <input 
-                    className="form-input" 
-                    type="text" 
-                    id="username" 
+        <div className="form-container">
+            <div className="form-title">
+                <h2>DirectEd <br />Dev-HUB</h2>
+                <p className="motto">Connect, share and learn!</p>
+                <p>
+                    Login to continue/
+                    <span id='switchLogin' onClick={toggleSwitch}>Signup</span>
+                    </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="form">
+                <label htmlFor="username">Username:</label>
+                <input
+                    className="form-input"
+                    type="text"
+                    id="username"
                     placeholder='Enter username'
                     value={username}
                     required
                     onChange={(e) => setUsername(e.target.value)}
-                    name="username" />
-                    <br />
+                    name="username"
+                />
+                <br />
 
-                   {/*  <label htmlFor="email">Email:</label>
-                    <input 
+                <label htmlFor="password">Password:</label>
+                <input
                     className="form-input"
-                    type="email"
-                    id="email" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder='Enter email'
-                    name="email" /> */}
-
-                    <label htmlFor="password">Password:</label>
-                    <input 
-                    className="form-input" 
-                    type="password" 
-                    id="password" 
+                    type="password"
+                    id="password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter password"
-                    name="password" />
-                    <br />
+                    name="password"
+                />
+                {error && <p id='invalid-error' className="error">{error}</p>}
+                <br />
 
-                    <button 
+                <button
                     className="form-submit"
-                    type="submit">Login</button>
-                    <br />
+                    type="submit">Login
+                </button>
+                <br />
 
-                    <p className="forgot">Forgot Password? <a href="#">Click here</a></p>
-                </form>
-            </div>
-        )
+                <p className="forgot">Forgot Password? <a href="#">Click here</a></p>
+            </form>
+        </div>
+    );
 }

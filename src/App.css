@@ -250,3 +250,15 @@ body {
   list-style-type: square;
   padding: 2.5px;
 }
+
+#switchLogin{
+  text-decoration: underline;
+  cursor: pointer;
+  color: blue;
+  font-weight: bold;
+}
+
+#invalid-error{
+  color: red;
+  font-size: 0.75rem;
+}
