@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
+import chatbot from "../img/chatbot.png"
+import commentBtn from "../img/comment button.png"
+import deleteBtn from "../img/delete button.png"
+import likeBtn from "../img/like button.png"
+import shareBtn from "../img/share button.png"
 
-export default function Main() {
+
+export default function Main({ searchQuery }) {
     const [blogArray, setBlogArray] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -99,19 +105,33 @@ export default function Main() {
         }
     }
 
+    const filteredBlogs = blogArray.filter(blog =>
+        blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        blog.content.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; 
+
+    let blogAuthor = "username"
+    let blogDate = `${currentMonth}, ${currentYear}`
+
     function updateBlog() {
-        return blogArray.map((blog, index) => (
+        return filteredBlogs.map((blog, index) => (
             <div key={index} className="blog-item">
-                <h4>{blog.title}</h4>
+                <h2>{blog.title}</h2>
                 <p>{blog.content}</p>
                 {blog.image && <img id="imageSection" src={blog.image} alt="Blog"/>}
                 <br />
                 <br />
+                <h5>@{blogAuthor}</h5>
+                <h5>Posted:{blogDate}</h5>
                 <div className="interaction-buttons">
                     <div className="left-buttons">
                         <img
                             onClick={() => addLike(index)}
-                            src="../img/like button.png"
+                            src={likeBtn}
                             width={30}
                             alt="Like icon"
                             className="like-icon"
@@ -119,14 +139,14 @@ export default function Main() {
                         <p id="likes" className="likes-count">{blog.likes}</p>
                         <img
                             onClick={() => toggleComments(index)}
-                            src="../img/comment button.png"
+                            src={commentBtn}
                             width={30}
                             alt="Comment icon"
                             className="comment-icon"
                         />
                         <img
                             onClick={() => shareBlog(blog.content)}
-                            src="../img/share button.png"
+                            src={shareBtn}
                             width={30}
                             alt="Share icon"
                             className="share-icon"
@@ -134,7 +154,7 @@ export default function Main() {
                     </div>
                     <img
                         onClick={() => deleteBlog(index)}
-                        src="../img/delete button.png"
+                        src={deleteBtn}
                         width={20}
                         height={20}
                         alt="Delete icon"
@@ -177,7 +197,7 @@ export default function Main() {
                         id="blogTitle"
                         placeholder="Title"
                     />
-                    <label htmlFor="write">Create blog!</label>
+                    <label htmlFor="write">Create your blog</label>
                     <input
                         type="text"
                         name="write"
@@ -188,7 +208,7 @@ export default function Main() {
                         type="button" 
                         onClick={triggerImageUpload}
                         className="addImages">
-                            Add images
+                            Add image
                     </button>
                     <div className="image-upload" style={{ display: 'none' }}>
                         <input
@@ -214,11 +234,19 @@ export default function Main() {
                 </section>
             </div>
             <div className="blog-content">
-                <h3 id="blog-header">Blogs</h3>
+                <h3 id="blog-header">New Blog Posts</h3>
                 {/* Other users blog should be displayed here */}
+                <section id="showItems">
+                    <div className="blog-container">
+                        {updateBlog()}
+                    </div>
+                </section>
             </div>
             <div>
-                <img className="chatbot" src="../img/chatbot.png" alt="chatbot" />
+                <img 
+                    className="chatbot" 
+                    src={chatbot}
+                    alt="chatbot" />
             </div>
         </main>
     );

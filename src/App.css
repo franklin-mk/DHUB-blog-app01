@@ -224,3 +224,29 @@ body {
 #imagePreview{
   width: 240px;
 }
+
+.searchBar{
+  padding: 3px;
+  border: solid 1px gray;
+  border-radius: 6px;
+  margin-right: 2px;
+}
+
+.searchIcon{
+  border: solid 1px gray;
+  border-radius: 6px;
+  background: transparent;
+  padding: 2px;
+}
+
+.side-nav{
+  padding: 10px 2px;
+  display: relative;
+  z-index: 2;
+  flex-direction: column;
+  width: 100%;
+}
+.navMenuItems{
+  list-style-type: square;
+  padding: 2.5px;
+}

@@ -9,6 +9,7 @@ import Main from '../public/Main';
 export default function App() {
   const [isNewUser, setIsNewUser] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSignup = () => {
     // Logic for signing up the user
@@ -23,6 +24,10 @@ export default function App() {
     setIsAuthenticated(true);
   };
 
+  function handleSearch(query) {
+    setSearchQuery(query);
+  }
+
   return (
     <div>
       {!isAuthenticated ? (
@@ -33,8 +38,8 @@ export default function App() {
         )
       ) : (
         <>
-          <Navbar />
-          <Main />
+          <Navbar onSearch={handleSearch} />
+          <Main searchQuery={searchQuery} />
         </>
       )}
     </div>
