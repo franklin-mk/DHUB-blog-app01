@@ -215,7 +215,12 @@ body {
   border-radius: 7px;
   padding: 5px;
   width: 50px;
+  margin-top: auto;
   margin-right: 10px;
   margin-left: auto;
   margin-bottom: 10px;
+}
+
+#imagePreview{
+  width: 240px;
 }

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 export default function Main() {
     const [blogArray, setBlogArray] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
     const [showCommentsIndex, setShowCommentsIndex] = useState(null);
 
     useEffect(() => {
@@ -35,6 +36,7 @@ export default function Main() {
         writeInput.value = "";
         document.getElementById("blogTitle").value = "";
         setSelectedImage(null); // Reset the selected image
+        setImagePreview(null); // Reset the image preview
     }
 
     function addLike(index) {
@@ -45,7 +47,11 @@ export default function Main() {
     }
 
     function handleImageUpload(e) {
-        setSelectedImage(e.target.files[0]);
+        const file = e.target.files[0];
+        if (file) {
+            setSelectedImage(file);
+            setImagePreview(URL.createObjectURL(file));
+        }
     }
 
     function triggerImageUpload() {
@@ -70,7 +76,7 @@ export default function Main() {
             navigator.share({
                 title: 'Check out this blog post!',
                 text: blogContent,
-                url: window.location.href // Share the current page URL
+                url: window.location.href
             })
             .then(() => console.log('Blog post shared successfully'))
             .catch((error) => console.error('Error sharing blog post:', error));
@@ -105,7 +111,7 @@ export default function Main() {
                     <div className="left-buttons">
                         <img
                             onClick={() => addLike(index)}
-                            src="img/like button.png"
+                            src="../img/like button.png"
                             width={30}
                             alt="Like icon"
                             className="like-icon"
@@ -113,14 +119,14 @@ export default function Main() {
                         <p id="likes" className="likes-count">{blog.likes}</p>
                         <img
                             onClick={() => toggleComments(index)}
-                            src="img/comment button.png"
+                            src="../img/comment button.png"
                             width={30}
                             alt="Comment icon"
                             className="comment-icon"
                         />
                         <img
                             onClick={() => shareBlog(blog.content)}
-                            src="img/share button.png"
+                            src="../img/share button.png"
                             width={30}
                             alt="Share icon"
                             className="share-icon"
@@ -128,7 +134,7 @@ export default function Main() {
                     </div>
                     <img
                         onClick={() => deleteBlog(index)}
-                        src="img/delete button.png"
+                        src="../img/delete button.png"
                         width={20}
                         height={20}
                         alt="Delete icon"
@@ -178,7 +184,12 @@ export default function Main() {
                         id="write"
                         placeholder="What's on your mind?"
                     />
-                    <button type="button" onClick={triggerImageUpload} className="addImages">Add images</button>
+                    <button 
+                        type="button" 
+                        onClick={triggerImageUpload}
+                        className="addImages">
+                            Add images
+                    </button>
                     <div className="image-upload" style={{ display: 'none' }}>
                         <input
                             type="file"
@@ -188,6 +199,11 @@ export default function Main() {
                             onChange={handleImageUpload}
                         />
                     </div>
+                    {imagePreview && (
+                        <div className="image-preview">
+                            <img id="imagePreview" src={imagePreview} alt="Selected image preview" />
+                        </div>
+                    )}
                     <button onClick={createBlog} id="post-btn" type="submit">Post</button>
                 </form>
                 <section id="showItems">
@@ -199,10 +215,10 @@ export default function Main() {
             </div>
             <div className="blog-content">
                 <h3 id="blog-header">Blogs</h3>
-                {/* You can display the blogs here as well, if needed */}
+                {/* Other users blog should be displayed here */}
             </div>
             <div>
-                <img className="chatbot" src="img/chatbot.png" alt="chatbot" />
+                <img className="chatbot" src="../img/chatbot.png" alt="chatbot" />
             </div>
         </main>
     );
