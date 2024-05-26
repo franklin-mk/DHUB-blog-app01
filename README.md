@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -17,3 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 firebase setup
+=======
+#React + Vite
+npm run dev
+>>>>>>> 5f4b6aae732bbf9db11d47b264338c9b2e425cbc
