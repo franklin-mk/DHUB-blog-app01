@@ -63,7 +63,7 @@ export default function Navbar({ onSearch }) {
                     <ol>
                         <li className="navMenuItems"><a href="#home">Create blog</a></li>
                         <li className="navMenuItems"><a href="#my-blogs">My Blogs</a></li>
-                        <li className="navMenuItems"><a href="https://travel-5pwshibtajxtfaqszyw6h5.streamlit.app/">Chat with our AI Assistant</a></li>
+                        <li className="navMenuItems"><a target="_blank" href="https://travel-5pwshibtajxtfaqszyw6h5.streamlit.app/">Chat with our AI Assistant</a></li>
                     </ol>
                 </nav>
             )}
