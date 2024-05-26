@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Signup({ onSignup, toggleSwitch}) {
+export default function Signup({ onSignup, toggleSwitch }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,7 +15,7 @@ export default function Signup({ onSignup, toggleSwitch}) {
 
         const newUser = { username, password };
         localStorage.setItem("user", JSON.stringify(newUser));
-        onSignup();
+        onSignup(username);
     };
 
     return (

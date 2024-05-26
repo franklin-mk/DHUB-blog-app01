@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import chatbot from "../img/chatbot.png"
-import commentBtn from "../img/comment button.png"
-import deleteBtn from "../img/delete button.png"
-import likeBtn from "../img/like button.png"
-import shareBtn from "../img/share button.png"
+import chatbot from "../img/chatbot.png";
+import commentBtn from "../img/comment button.png";
+import deleteBtn from "../img/delete button.png";
+import likeBtn from "../img/like button.png";
+import shareBtn from "../img/share button.png";
 
-
-export default function Main({ searchQuery }) {
+export default function Main({ searchQuery, username }) {
     const [blogArray, setBlogArray] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -16,6 +15,27 @@ export default function Main({ searchQuery }) {
         const storedBlogs = JSON.parse(localStorage.getItem("blogArray")) || [];
         setBlogArray(storedBlogs);
     }, []);
+
+    const [categoryData, setCategoryData] = React.useState(
+        {
+            travel: false, 
+            tourism: false,
+            wildlife: false,
+            other: true
+        }
+    )
+    function handleCategory(event){
+        const {name, checked} = event.target
+        setCategoryData((prevData) => {
+            return {...prevData, 
+                [name]: checked
+            }
+        })
+    }
+
+    const checkedCategories = Object.keys(categoryData)
+    .filter((category) => categoryData[category])
+    .join(', ');
 
     function createBlog(e) {
         e.preventDefault();
@@ -32,7 +52,9 @@ export default function Main({ searchQuery }) {
             content: blogContent, 
             likes: 0, 
             image: selectedImage ? URL.createObjectURL(selectedImage) : null,
-            comments: []
+            comments: [],
+            author: username, // Include the username as the author
+            date: new Date().toLocaleDateString()
         };
 
         const newBlogArray = [newBlog, ...blogArray];
@@ -109,23 +131,18 @@ export default function Main({ searchQuery }) {
         blog.content.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1; 
-
-    let blogAuthor = "username"
-    let blogDate = `${currentMonth}, ${currentYear}`
+    
 
     function updateBlog() {
         return filteredBlogs.map((blog, index) => (
             <div key={index} className="blog-item">
+                <h5 className="blogAuthor">@{blog.author}</h5>
                 <h2>{blog.title}</h2>
                 <p>{blog.content}</p>
                 {blog.image && <img id="imageSection" src={blog.image} alt="Blog"/>}
                 <br />
-                <br />
-                <h5>@{blogAuthor}</h5>
-                <h5>Posted:{blogDate}</h5>
+                <p>#{checkedCategories}</p>
+                <h5>Posted: {blog.date}</h5>
                 <div className="interaction-buttons">
                     <div className="left-buttons">
                         <img
@@ -187,7 +204,7 @@ export default function Main({ searchQuery }) {
     return (
         <main>
             <div className="home-content">
-                <h3 id="home-header">Home</h3>
+                <h4 id="home-header">Create a new blog!</h4>
                 <form className="create-blog" action="Post">
                     <label htmlFor="blogTitle">Title</label>
                     <input
@@ -196,13 +213,52 @@ export default function Main({ searchQuery }) {
                         id="blogTitle"
                         placeholder="Title"
                     />
-                    <label htmlFor="write">Create your blog</label>
+                    <label htmlFor="write">Write your blog</label>
                     <input
                         type="text"
                         name="write"
                         id="write"
                         placeholder="What's on your mind?"
                     />
+                    <h5>Select categories</h5>
+                    <div className="blogCategories">
+                        <input 
+                            id="travel"
+                            type="checkbox"
+                            name="travel"
+                            checked={categoryData.travel}
+                            onChange={handleCategory} 
+                        />
+                        <label htmlFor="travel">Travel</label>   
+                        
+                        <input 
+                            id="tourism" 
+                            type="checkbox"
+                            name="tourism"
+                            checked={categoryData.tourism}
+                            onChange={handleCategory} 
+                        />
+                        <label htmlFor="tourism">Tourism</label>
+                        
+                        <input 
+                            id="wildlife" 
+                            type="checkbox"
+                            name="wildlife"
+                            checked={categoryData.wildlife}
+                            onChange={handleCategory} 
+                        />
+                        <label htmlFor="wildlife">Wildlife</label>
+                        
+                        <input 
+                            id="other" 
+                            type="checkbox"
+                            name="other"
+                            checked={categoryData.other}
+                            onChange={handleCategory} 
+                        />
+                        <label htmlFor="other">Other</label>
+                    </div>
+
                     <button 
                         type="button" 
                         onClick={triggerImageUpload}
@@ -233,8 +289,8 @@ export default function Main({ searchQuery }) {
                 </section>
             </div>
             <div className="blog-content">
-                <h3 id="blog-header">New Blog Posts</h3>
-                {/* Other users blog should be displayed here 
+                {/* <h3 id="blog-header">New Blog Posts</h3>
+                 Other users' blogs should be displayed here 
                     <section id="showItems">
                         <div className="blog-container">
                             {updateBlog()}
@@ -243,11 +299,16 @@ export default function Main({ searchQuery }) {
                 */}
                 
             </div>
+
+            {/* Generative AI specialist put your deployed ChatBot link here */}
             <div>
-                <img 
-                    className="chatbot" 
-                    src={chatbot}
-                    alt="chatbot" />
+                <a target="_blank" href="https://">
+                    <img 
+                        className="chatbot" 
+                        src={chatbot}
+                        alt="chatbot" 
+                    />
+                </a>
             </div>
         </main>
     );

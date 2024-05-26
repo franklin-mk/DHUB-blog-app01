@@ -9,7 +9,7 @@ export default function Login({ onLogin, toggleSwitch }) {
         e.preventDefault();
         const storedUser = JSON.parse(localStorage.getItem("user"));
         if (storedUser && storedUser.username === username && storedUser.password === password) {
-            onLogin();
+            onLogin(username);
         } else {
             setError("Invalid username or password");
         }
