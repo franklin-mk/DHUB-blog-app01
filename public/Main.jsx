@@ -302,7 +302,7 @@ export default function Main({ searchQuery, username }) {
 
             {/* Generative AI specialist put your deployed ChatBot link here */}
             <div>
-                <a target="_blank" href="https://">
+                <a target="_blank" href="https://travel-5pwshibtajxtfaqszyw6h5.streamlit.app/">
                     <img 
                         className="chatbot" 
                         src={chatbot}
