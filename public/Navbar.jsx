@@ -61,11 +61,9 @@ export default function Navbar({ onSearch }) {
             {showNavMenu && (
                 <nav className="side-nav">
                     <ol>
-                        <li className="navMenuItems"><a href="#account">My Account</a></li>
                         <li className="navMenuItems"><a href="#home">Create blog</a></li>
                         <li className="navMenuItems"><a href="#my-blogs">My Blogs</a></li>
-                        <li className="navMenuItems"><a href="#blogs">Blogs</a></li>
-                        <li className="navMenuItems"><a href="#chat">Chat with our AI Assistant</a></li>
+                        <li className="navMenuItems"><a href="https://travel-5pwshibtajxtfaqszyw6h5.streamlit.app/">Chat with our AI Assistant</a></li>
                     </ol>
                 </nav>
             )}
